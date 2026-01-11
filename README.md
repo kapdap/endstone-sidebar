@@ -33,6 +33,10 @@ Custom sidebar plugin for endstone server.
 - [x] `{uuid}` player's uuid
 - [x] `{device_os}` os name of player's current device
 - [x] `{locale}` player's locale
+- [x] `{chunk_x}` chunk x coordinate
+- [x] `{chunk_z}` chunk z coordinate
+- [x] `{chunk_rel_x}` chunk relative x coordinate
+- [x] `{chunk_rel_z}` chunk relative z coordinate
 
 ## Install
 

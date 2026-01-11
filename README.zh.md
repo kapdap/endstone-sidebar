@@ -33,6 +33,10 @@ Endstone平台的自定义侧栏插件
 - [x] `{uuid}` 玩家uuid
 - [x] `{device_os}` 玩家当前设备操作系统名称
 - [x] `{locale}` 玩家语言
+- [x] `{chunk_x}` 区块x坐标
+- [x] `{chunk_z}` 区块z坐标
+- [x] `{chunk_rel_x}` 区块内相对x坐标
+- [x] `{chunk_rel_z}` 区块内相对z坐标
 
 ## 安装
 
