@@ -107,6 +107,10 @@ class SidebarPlugin(Plugin):
         self.register_placeholder("uuid", lambda p: p.unique_id)
         self.register_placeholder("device_os", lambda p: p.device_os)
         self.register_placeholder("locale", lambda p: p.locale)
+        self.register_placeholder("chunk_x", lambda p: int(p.location.x) // 16)
+        self.register_placeholder("chunk_z", lambda p: int(p.location.z) // 16)
+        self.register_placeholder("chunk_rel_x", lambda p: int(p.location.x) % 16)
+        self.register_placeholder("chunk_rel_z", lambda p: int(p.location.z) % 16)
 
     def register_placeholder(
             self, name: str, provider: Callable[[Player], typing.Any]
