@@ -17,6 +17,7 @@ class SidebarPlugin(Plugin):
     def __init__(self):
         super().__init__()
         self.update_period: int = 20
+        self.player_list: list[str] = []
         self.sidebar_title: str = ""
         self.sidebar_content: list[str] = []
         self.placeholders: dict[str, Callable[[Player], str]] = {}
@@ -32,14 +33,18 @@ class SidebarPlugin(Plugin):
 
     @event_handler
     def on_player_join(self, event: PlayerJoinEvent) -> None:
-        event.player.scoreboard = self.server.create_scoreboard()
+        if self.is_enabled_for(event.player):
+            event.player.scoreboard = self.server.create_scoreboard()
 
     def update_sidebar(self) -> None:
         for player in self.server.online_players:
             self.update_sidebar_for(player)
 
     def update_sidebar_for(self, player: Player) -> None:
-        if player.scoreboard is self.server.scoreboard:
+        if (
+            not self.is_enabled_for(player)
+            or player.scoreboard is self.server.scoreboard
+        ):
             return
 
         t = self.replace_placeholder(self.sidebar_title, player)
@@ -66,6 +71,7 @@ class SidebarPlugin(Plugin):
 
     def load_config(self) -> None:
         self.update_period = self.config["update_period"]
+        self.player_list = self.config["player_list"]
         self.sidebar_title = self.config["sidebar"]["title"]
         self.sidebar_content = self.config["sidebar"]["content"]
 
@@ -116,3 +122,8 @@ class SidebarPlugin(Plugin):
             self, name: str, provider: Callable[[Player], typing.Any]
     ) -> None:
         self.placeholders[name] = provider
+
+    def is_enabled_for(self, player: Player) -> bool:
+        if not self.player_list:
+            return True
+        return player.name in self.player_list or player.xuid in self.player_list
